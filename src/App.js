@@ -5,20 +5,24 @@ import { useState } from 'react';
 function App() {
   const [tasks, setTasks] = useState([
     {id: 1, value:"faire le linge", status:false},
-    {id: 2, value:"faire le linge", status:false},
-    {id: 3, value:"faire le linge", status:false}
+    {id: 2, value:"faire la vaisselle", status:false},
+    {id: 3, value:"faire le con", status:false}
   ])
   const [input, setInput] = useState("")
-
 
   function checkButton(task) {
     if (task.status) {
       return ''
     }
     else{
-    return <span onClick={() =>completeTask(task)}>V</span>
+    return <span onClick={() => completeTask(task)}>V |</span>
     }
   }
+
+  function deleteButton(task) {
+    return <span onClick={() => deleteTask(task)}>| X</span>
+  }
+
   function completeTask(completedTask) {
     // V1
     let copyTasks = tasks.map(task => task == completedTask ? {...task} : task)
@@ -32,12 +36,14 @@ function App() {
 
     setTasks(copyTasks)
   }
+
   function newTask(){
-    let copyTask = [...tasks]
-    copyTask.push({value:input, status:false})
-    setTasks(copyTask)
+    let copyTasks = [...tasks]
+    copyTasks.push({value:input, status:false})
+    setTasks(copyTasks)
     setInput('');
   }
+
   function deleteTask(taskDelete) {
     let newTask = tasks.filter((task)=> taskDelete.id != task.id);
     setTasks(newTask)
@@ -47,7 +53,7 @@ function App() {
     <div className="App">
       <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
       <button onClick={() => newTask()}>nouvelle tâche</button>
-      {tasks.map((task) =><p><span>{checkButton(task)}</span>{task.value} | <span onClick={() =>deleteTask(task)} > X</span></p>)}
+      {tasks.map((task) =><p>{checkButton(task)}{task.value}{deleteButton(task)}</p>)}
     </div>
   );
 }
