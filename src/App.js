@@ -3,12 +3,9 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {id: 1, value:"faire le linge", status:false},
-    {id: 2, value:"faire la vaisselle", status:false},
-    {id: 3, value:"faire le con", status:false}
-  ])
+  const [tasks, setTasks] = useState([])
   const [input, setInput] = useState("")
+  const [id, setId] = useState(1)
 
   function checkButton(task) {
     if (task.status) {
@@ -39,9 +36,10 @@ function App() {
 
   function newTask(){
     let copyTasks = [...tasks]
-    copyTasks.push({value:input, status:false})
+    copyTasks.push({id: id, value:input, status:false})
     setTasks(copyTasks)
     setInput('');
+    setId(id + 1);
   }
 
   function deleteTask(taskDelete) {
